@@ -1,19 +1,20 @@
-import { AdvertClass } from 'basic'
+import { AdvertClass, UserSettingClass } from 'basic'
 import { window } from '@kit.ArkUI'
 
 @Entry
 @Component
 struct Start {
   @State
-  adObj: AdvertClass = {
-    showAd: false,
-    adTime: 5
-  }
+  adObj: AdvertClass = {} as AdvertClass
   @State
   timer: number = -1
 
   // 页面开始加载的时候就会触发当前生命周期方法
   aboutToAppear(): void {
+
+    // 获取到本地存储的广告配置
+    const setting = new UserSettingClass(getContext())
+    this.adObj = setting.getUserAd()
 
     // 调用倒计时方法
     this.countDown()
@@ -46,7 +47,7 @@ struct Start {
 
   build() {
     Stack({ alignContent: Alignment.TopEnd }) {
-      Image($r("app.media.start"))// 之前导入了静态资源暴力的资源
+      Image(this.adObj.adImage)// 之前导入了静态资源暴力的资源
         .objectFit(ImageFit.Cover)
 
       Text(`${this.adObj.adTime}秒后自动跳过`)
