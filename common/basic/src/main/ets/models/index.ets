@@ -1,4 +1,2 @@
 
-export {
-
-}
+export * from "./advert"

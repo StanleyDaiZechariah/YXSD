@@ -1,17 +1,49 @@
+import { AdvertClass } from 'basic'
+
 @Entry
 @Component
 struct Start {
-  @State message: string = 'Hello World';
+  @State
+  adObj: AdvertClass = {
+    showAd: false,
+    adTime: 5
+  }
+  @State
+  timer: number = -1
+
+  // 页面开始加载的时候就会触发当前生命周期方法
+  aboutToAppear(): void {
+
+    // 调用倒计时方法
+    this.countDown()
+  }
+
+  // 倒计时的方法
+  countDown() {
+    this.timer = setInterval(() => {
+      if (this.adObj.adTime === 0) {
+        clearInterval(this.timer)
+        return
+      }
+      this.adObj.adTime--
+    }, 1000)
+  }
+
+  // 当前页面销毁的时候，一定要销毁定时器,否则会导致内存泄漏
+  aboutToDisappear(): void {
+    // 清楚定时器
+    clearInterval(this.timer)
+  }
 
   build() {
-    Stack({alignContent:Alignment.TopEnd}){
-      Image($r("app.media.start")) // 之前导入了静态资源暴力的资源
+    Stack({ alignContent: Alignment.TopEnd }) {
+      Image($r("app.media.start"))// 之前导入了静态资源暴力的资源
         .objectFit(ImageFit.Cover)
 
-      Text("5秒后跳过")
-        .padding({left: 10, right: 10})
+      Text(`${this.adObj.adTime}秒后跳过`)
+        .padding({ left: 10, right: 10 })
         .height(30)
-        .margin({right:20, top:20})
+        .margin({ right: 20, top: 20 })
         .fontSize(14)
         .borderRadius(15)
         .textAlign(TextAlign.Center)
