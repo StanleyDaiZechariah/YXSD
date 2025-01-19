@@ -1,5 +1,6 @@
 // 封装存储数据的方法
 import { preferences } from '@kit.ArkData';
+import { XSD_SETTING, XSD_SETTING_AD } from '../constants';
 import { AdvertClass } from '../models/advert';
 
 
@@ -26,7 +27,7 @@ export class UserSettingClass {
   getStore() {
     // 创建仓库
     return preferences.getPreferencesSync(this.context, {
-      name: "advertisement"
+      name: XSD_SETTING
     })
   }
 
@@ -35,7 +36,7 @@ export class UserSettingClass {
     // 获取到了仓库
     const store = this.getStore()
     // 给仓库中存储数据
-    store.putSync("setting_ad", JSON.stringify(ad))
+    store.putSync(XSD_SETTING_AD, JSON.stringify(ad))
     // 将数据写入到磁盘中
     store.flush()
   }
@@ -45,6 +46,6 @@ export class UserSettingClass {
     // 获取创建的仓库
     const store = this.getStore()
     // 获取广告的数据
-    return JSON.parse(store.getSync("setting_ad", JSON.stringify(defaultAd)) as string)
+    return JSON.parse(store.getSync(XSD_SETTING_AD, JSON.stringify(defaultAd)) as string)
   }
 }
