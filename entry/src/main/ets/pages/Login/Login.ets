@@ -1,4 +1,6 @@
+import { loginApi } from '../../api/user'
 import { AccountFormModel } from '../../models/user'
+import { router } from '@kit.ArkUI'
 
 /*
  * 我们在按钮这里做了几件事情：
@@ -21,13 +23,31 @@ struct Login {
   }
 
   // 登录方法
-  submitLogin() {
+  async submitLogin() {
+    // 控制显示loading
     this.showLoading = true
 
-    setTimeout(() => {
-      this.showLoading = false
+    // 调用登录接口
+    try {
+      const res = await loginApi(this.accountForm)
 
-    }, 2000)
+      AlertDialog.show({
+        message: JSON.stringify(res)
+      })
+
+      // TODO: 将token存储到本地
+
+      // TODO:跳转到本地
+      router.pushUrl({
+        url: "pages/Index"
+      })
+    } catch (e) {
+      AlertDialog.show({
+        message: '123'
+      })
+    } finally {
+      this.showLoading = false
+    }
   }
 
   // 账号与密码非空状态处理
