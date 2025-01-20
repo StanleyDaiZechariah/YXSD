@@ -18,7 +18,8 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 //  5.创建响应拦截器
 service.interceptors.response.use((response: AxiosResponse) => {
-  if (response.status === 200) {
+  // 状态码为200且业务码的状态也为200时再返回数据
+  if (response.status === 200 && response.data.code === 200) {
     return response.data.data
   }
   // return response

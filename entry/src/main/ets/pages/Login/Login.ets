@@ -1,6 +1,7 @@
 import { loginApi } from '../../api/user'
 import { AccountFormModel } from '../../models/user'
 import { router } from '@kit.ArkUI'
+import { UserSettingClass } from 'basic'
 
 /*
  * 我们在按钮这里做了几件事情：
@@ -31,19 +32,18 @@ struct Login {
     try {
       const res = await loginApi(this.accountForm)
 
-      AlertDialog.show({
-        message: JSON.stringify(res)
-      })
+      // TODO: 将token存储到本地（首选项）
+      // 调用存储token的方法
+      const setting = new UserSettingClass(getContext())
+      setting.setUserToken(res)
 
-      // TODO: 将token存储到本地
-
-      // TODO:跳转到本地
+      // TODO:跳转到首页
       router.pushUrl({
         url: "pages/Index"
       })
     } catch (e) {
       AlertDialog.show({
-        message: '123'
+        message: "登陆失败！"
       })
     } finally {
       this.showLoading = false
