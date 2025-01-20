@@ -38,14 +38,23 @@ export default class EntryAbility extends UIAbility {
       win.setUIContent("pages/Start/Start")
     }
 
+    /*
+     *  页面鉴权的思路
+     *  本处实现的是全局页面鉴权
+     * 可以试试部分页面鉴权
+     * */
+    // 1.获取本地存储的token
+    const token = setting.getUserToken()
+    // 2.判断token是否存在，如果存在直接跳转到主页
+    let path: string = ""
+    if (token) {
+      path = "pages/Index/Index"
+      // 3.如果不存在则跳转到登陆页面
+    } else {
+      path = "pages/Login/Login"
+    }
 
-    windowStage.loadContent('pages/Login/Login', (err) => {
-      if (err.code) {
-        hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
-        return;
-      }
-      hilog.info(0x0000, 'testTag', 'Succeeded in loading the content.');
-    });
+    windowStage.loadContent(path);
   }
 
   onWindowStageDestroy(): void {

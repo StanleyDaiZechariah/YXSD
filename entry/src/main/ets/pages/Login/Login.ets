@@ -39,7 +39,7 @@ struct Login {
 
       // TODO:跳转到首页
       router.pushUrl({
-        url: "pages/Index"
+        url: "pages/Index/Index"
       })
     } catch (e) {
       AlertDialog.show({
