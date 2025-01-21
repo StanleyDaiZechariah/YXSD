@@ -1,23 +1,28 @@
-
+import { TableClass } from 'basic'
 
 @Entry
 @Component
 struct Index {
-  @State message: string = 'Hello World';
-
+  @State
+  tabsData: TableClass[] = [
+    {
+      title: "任务",
+      icon: $r('app.media.ic_tab_btn_task'),
+      name: "task"
+    },
+    {
+      title: "消息",
+      icon: $r('app.media.ic_tab_btn_mess_nor'),
+      name: "message"
+    },
+    {
+      title: "我的",
+      icon: $r('app.media.ic_tab_btn_mine_nor'),
+      name: "mine"
+    }
+  ]
 
   build() {
-    RelativeContainer() {
-      Text(this.message)
-        .id('HelloWorld')
-        .fontSize(50)
-        .fontWeight(FontWeight.Bold)
-        .alignRules({
-          center: { anchor: '__container__', align: VerticalAlign.Center },
-          middle: { anchor: '__container__', align: HorizontalAlign.Center }
-        })
-    }
-    .height('100%')
-    .width('100%')
+    
   }
 }
