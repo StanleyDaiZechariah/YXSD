@@ -11,6 +11,7 @@ struct My {
           .aspectRatio(1)
           .borderRadius(34)
 
+        // 用户名
         Text('李立明')
           .fontSize(18)
           .fontWeight(400)
@@ -21,12 +22,14 @@ struct My {
             bottom: 9
           })
 
+        // 司机编号
         Text("司机编号：666666")
           .fontSize(14)
           .fontWeight(400)
           .fontColor($r('app.color.white'))
           .lineHeight(20)
 
+        // 手机号
         Text("手机号：178090802342")
           .fontSize(14)
           .fontWeight(400)
@@ -49,6 +52,7 @@ struct My {
           .lineHeight(20)
 
         Row() {
+          // 任务总量
           Column() {
             Text("18")
               .fontSize(18)
@@ -62,6 +66,7 @@ struct My {
               .lineHeight(17)
           }
 
+          // 完成任务量
           Column() {
             Text("18")
               .fontSize(18)
@@ -75,6 +80,7 @@ struct My {
               .lineHeight(17)
           }
 
+          // 运输历程
           Column() {
             Text("3987")
               .fontSize(18)
@@ -97,7 +103,8 @@ struct My {
       .margin({
         left: 16,
         right: 16,
-        top: -55
+        top: -45,
+        bottom: 15
       })
       .padding({ top: 14, bottom: 14 })
       .backgroundColor($r('app.color.white'))
@@ -105,6 +112,78 @@ struct My {
 
 
       // 选项列表
+      Column() {
+        // 车辆信息
+        Row() {
+          Text('车辆信息')
+            .fontSize(16)
+            .fontWeight(400)
+            .fontColor($r('app.color.text_primary'))
+
+          Image($r('app.media.ic_btn_more'))
+            .width(24)
+            .aspectRatio(1)
+        }
+        .width('100%')
+        .height(60)
+        .border({
+          width: {
+            bottom: 1
+          },
+          color: $r('app.color.background_page')
+        })
+        .justifyContent(FlexAlign.SpaceBetween)
+
+        // 任务数据
+        Row() {
+          Text('任务数据')
+            .fontSize(16)
+            .fontWeight(400)
+            .fontColor($r('app.color.text_primary'))
+
+          Image($r('app.media.ic_btn_more'))
+            .width(24)
+            .aspectRatio(1)
+        }
+        .width('100%')
+        .height(60)
+        .border({
+          width: {
+            bottom: 1
+          },
+          color: $r('app.color.background_page')
+        })
+        .justifyContent(FlexAlign.SpaceBetween)
+
+        // 系统设置
+        Row() {
+          Text('系统设置')
+            .fontSize(16)
+            .fontWeight(400)
+            .fontColor($r('app.color.text_primary'))
+
+          Image($r('app.media.ic_btn_more'))
+            .width(24)
+            .aspectRatio(1)
+        }
+        .width('100%')
+        .height(60)
+        .border({
+          width: {
+            bottom: 1
+          },
+          color: $r('app.color.background_page')
+        })
+        .justifyContent(FlexAlign.SpaceBetween)
+
+      }
+      .margin({ left: 16, right: 16 })
+      .backgroundColor($r('app.color.white'))
+      .borderRadius(8)
+      .padding({
+        left: 18,
+        right: 18
+      })
 
     }
     .height('100%')
