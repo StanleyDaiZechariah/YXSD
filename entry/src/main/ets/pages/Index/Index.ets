@@ -1,4 +1,7 @@
 import { TableClass } from 'basic'
+import Message from './Message/Message'
+import My from './My/My'
+import Task from './Task/Task'
 
 @Entry
 @Component
@@ -49,10 +52,17 @@ struct Index {
       Tabs({ barPosition: BarPosition.End, index: $$this.currentIndex }) {
         ForEach(this.tabsData, (item: TableClass) => {
           TabContent() {
-            Text(item.name)
+            if (item.name === "task") {
+              Task()
+            } else if (item.name === "message") {
+              Message()
+            } else {
+              My()
+            }
           }.tabBar(this.getTabBar(item)) // 因为在内部所以需要用this指明
         })
       }
+      .animationDuration(200)
     }
     .width('100%')
     .height('100%')
