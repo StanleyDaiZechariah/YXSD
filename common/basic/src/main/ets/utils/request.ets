@@ -18,13 +18,16 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   // 获取token
   const setting = new UserSettingClass(getContext())
   const token = setting.getUserToken()
+  /*AlertDialog.show({
+    message: '111' + JSON.stringify(token)
+  })*/
   // 如果token存在
   if (token) {
     // 将token通过请求头(headers)发送给后台
     config.headers.Authorization = token
   }
 
-  return config;
+  return config
 }, (error: AxiosError) => {
   return Promise.reject(error);
 });

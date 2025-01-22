@@ -8,23 +8,34 @@ import { UserInfoModel } from '../../../models'
 struct My {
   // 保存从后台获取的用户信息
   @State
-  userInfo: UserInfoModel = {} as UserInfoModel
+  userInfo: UserInfoModel = {
+    avatar: $r('app.media.ic_avatar_driver'),
+    name: "",
+    phone: "",
+    number: ""
+  } as UserInfoModel
+  @Consume
+  @Watch("getUserInfo")
+  currentName: string
 
-  aboutToAppear(): void {
-    // 调用获取用户信息接口
-    this.getUserInfo()
-  }
+  // 页面第一次加载的时候，才会执行当前方法
+  // aboutToAppear(): void {
+  //   // 调用获取用户信息接口
+  //   this.getUserInfo()
+  // }
 
   // 获取用户信息方法
   async getUserInfo() {
     try {
-      AlertDialog.show({
-        message: "123"
-      })
-      this.userInfo = await getUserInfoApi()
-      AlertDialog.show({
-        message: JSON.stringify(this.userInfo)
-      })
+      /*AlertDialog.show({
+        message: "222"
+      })*/
+      if (this.currentName === "my") {
+        this.userInfo = await getUserInfoApi()
+        AlertDialog.show({
+          message: "333" + JSON.stringify(this.userInfo)
+        })
+      }
     } catch (e) {
       console.log("error", e)
     }
@@ -32,46 +43,48 @@ struct My {
 
   build() {
     Column() {
-      // 用户信息模块
-      Column() {
-        // 汽车图标
-        Image($r('app.media.ic_avatar_driver'))
-          .width(67)
-          .aspectRatio(1)
-          .borderRadius(34)
+      if (this.userInfo.name) {
+        // 用户信息模块
+        Column() {
+          // 汽车图标
+          Image(this.userInfo?.avatar)
+            .width(67)
+            .aspectRatio(1)
+            .borderRadius(34)
 
-        // 用户名
-        Text('李立明')
-          .fontSize(18)
-          .fontWeight(400)
-          .fontColor($r('app.color.white'))
-          .lineHeight(25)
-          .margin({
-            top: 9,
-            bottom: 9
-          })
+          // 用户名
+          Text(this.userInfo?.name)
+            .fontSize(18)
+            .fontWeight(400)
+            .fontColor($r('app.color.white'))
+            .lineHeight(25)
+            .margin({
+              top: 9,
+              bottom: 9
+            })
 
-        // 司机编号
-        Text("司机编号：666666")
-          .fontSize(14)
-          .fontWeight(400)
-          .fontColor($r('app.color.white'))
-          .lineHeight(20)
+          // 司机编号
+          Text(`司机编号：${this.userInfo?.number}`)
+            .fontSize(14)
+            .fontWeight(400)
+            .fontColor($r('app.color.white'))
+            .lineHeight(20)
 
-        // 手机号
-        Text("手机号：178090802342")
-          .fontSize(14)
-          .fontWeight(400)
-          .fontColor($r('app.color.white'))
-          .lineHeight(20)
-          .margin({ top: 10 })
+          // 手机号
+          Text(`手机号：${this.userInfo?.phone}`)
+            .fontSize(14)
+            .fontWeight(400)
+            .fontColor($r('app.color.white'))
+            .lineHeight(20)
+            .margin({ top: 10 })
+        }
+        .width('100%')
+        .height(292)
+        .backgroundImage($r('app.media.bg_page_my'))
+        .backgroundImageSize(ImageSize.Cover)
+        .justifyContent(FlexAlign.Center)
+        .alignItems(HorizontalAlign.Center)
       }
-      .width('100%')
-      .height(292)
-      .backgroundImage($r('app.media.bg_page_my'))
-      .backgroundImageSize(ImageSize.Cover)
-      .justifyContent(FlexAlign.Center)
-      .alignItems(HorizontalAlign.Center)
 
       // 本月任务
       Column() {

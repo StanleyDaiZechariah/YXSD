@@ -26,7 +26,16 @@ struct Index {
     }
   ]
   // 初始化一个变量保存选中的tabContent
-  @State currentIndex: number = 0
+  @State
+  @Watch("updateName")
+  currentIndex: number = 0
+  @Provide
+  currentName: string = "task"
+
+  // 监听下标的变化
+  updateName() {
+    this.currentName = this.tabsData[this.currentIndex].name
+  }
 
   // 自定义tabBar的布局
   @Builder
