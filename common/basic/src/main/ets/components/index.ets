@@ -1,4 +1,3 @@
+export * from "./iCard"
 
-export {
-
-}
+export * from "./iCardItem"

@@ -1,3 +1,6 @@
+import { ICard } from 'basic/src/main/ets/components/iCard'
+import { ICardItem } from 'basic/src/main/ets/components/iCardItem'
+
 @Entry
 @Component
 struct My {
@@ -112,7 +115,22 @@ struct My {
 
 
       // 选项列表
-      Column() {
+      ICard() {
+        // 尾随闭包的写法
+        ICardItem({
+          leftText: "车辆信息"
+        })
+
+        ICardItem({
+          leftText: "任务数据",
+        })
+
+        ICardItem({
+          leftText: "系统数据"
+        })
+      }
+
+      /*Column() {
         // 车辆信息
         Row() {
           Text('车辆信息')
@@ -183,7 +201,7 @@ struct My {
       .padding({
         left: 18,
         right: 18
-      })
+      })*/
 
     }
     .height('100%')
