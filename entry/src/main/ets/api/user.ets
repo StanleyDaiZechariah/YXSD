@@ -1,6 +1,6 @@
 // 1.导入封装的http请求
 import { Http } from 'basic'
-import { AccountFormModel, UserInfoModel } from '../models'
+import { AccountFormModel, UserInfoModel, UserTaskInfoModel, UserTaskInfoParamsModel } from '../models'
 
 // 2.导出并创建对应接口方法
 // 3.给参数以及返回的数据指定类型
@@ -24,6 +24,16 @@ export const loginApi = (data: AccountFormModel): Promise<string> => {
 export const getUserInfoApi = (): Promise<UserInfoModel> => {
   return Http.get<UserInfoModel>("/users")
 }
+
+
+/*
+ * 获取任务数据的接口
+ *
+ * */
+export const getUserTaskInfoApi = (params: UserTaskInfoParamsModel): Promise<UserTaskInfoModel> => {
+  return Http.get<UserTaskInfoModel>("/users/taskReport", params)
+}
+
 
 /*
  * 退出登录接口
