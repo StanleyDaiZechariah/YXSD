@@ -2,6 +2,7 @@ import { ICard } from 'basic/src/main/ets/components/iCard'
 import { ICardItem } from 'basic/src/main/ets/components/iCardItem'
 import { getUserInfoApi, getUserTaskInfoApi } from '../../../api'
 import { UserInfoModel, UserTaskInfoModel, UserTaskInfoParamsModel } from '../../../models'
+import { router } from '@kit.ArkUI'
 
 @Entry
 @Component
@@ -192,7 +193,12 @@ struct My {
         })
 
         ICardItem({
-          leftText: "系统数据"
+          leftText: "系统设置",
+          onRightClick: () => {
+            router.pushUrl({
+              url: "pages/Setting/Setting"
+            })
+          }
         })
       }
 
