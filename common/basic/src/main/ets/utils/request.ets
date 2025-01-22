@@ -2,6 +2,7 @@
 //  1.安装axios
 //  2.引入axios
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from '@ohos/axios';
+import { UserSettingClass } from '../../../../Index';
 import { BASE_URL } from '../constants';
 
 //  3.创建axios实例对象
@@ -9,8 +10,20 @@ const service = axios.create({
   baseURL: BASE_URL,
   timeout: 10000
 })
+
 //  4.创建请求拦截器
 service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+
+  // token 本地 首选项当中
+  // 获取token
+  const setting = new UserSettingClass(getContext())
+  const token = setting.getUserToken()
+  // 如果token存在
+  if (token) {
+    // 将token通过请求头(headers)发送给后台
+    config.headers.Authorization = token
+  }
+
   return config;
 }, (error: AxiosError) => {
   return Promise.reject(error);
