@@ -67,5 +67,15 @@ export class UserSettingClass {
     // 获取数据
     return store.getSync(USER_TOKEN, "") as string
   }
+
+  // 你也可以专门设置一个删除token的方法
+  deleteUserToken() {
+    // 获取仓库
+    const store = this.getStore()
+    // 删除数据
+    store.deleteSync(USER_TOKEN)
+    // 写入磁盘
+    store.flush()
+  }
 }
 

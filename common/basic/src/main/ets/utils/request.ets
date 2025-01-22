@@ -4,6 +4,7 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from '@ohos/axios';
 import { UserSettingClass } from '../../../../Index';
 import { BASE_URL } from '../constants';
+import { promptAction, router } from '@kit.ArkUI';
 
 //  3.创建axios实例对象
 const service = axios.create({
@@ -40,6 +41,24 @@ service.interceptors.response.use((response: AxiosResponse) => {
   }
   // return response
 }, (error: AxiosError) => {
+
+  // 如果token过期了
+  if (error.response?.status === 401) {
+    promptAction.showToast({
+      message: "登陆超时！"
+    })
+
+    // 删除原来的token(将token设置为空)
+    const setting = new UserSettingClass(getContext())
+    // setting.setUserToken("")
+    setting.deleteUserToken()
+
+    // 重新登陆
+    router.replaceUrl({
+      url: "pages/Login/Login"
+    })
+  }
+
   return Promise.reject(error);
 });
 
