@@ -1,9 +1,35 @@
 import { ICard } from 'basic/src/main/ets/components/iCard'
 import { ICardItem } from 'basic/src/main/ets/components/iCardItem'
+import { getUserInfoApi } from '../../../api'
+import { UserInfoModel } from '../../../models'
 
 @Entry
 @Component
 struct My {
+  // 保存从后台获取的用户信息
+  @State
+  userInfo: UserInfoModel = {} as UserInfoModel
+
+  aboutToAppear(): void {
+    // 调用获取用户信息接口
+    this.getUserInfo()
+  }
+
+  // 获取用户信息方法
+  async getUserInfo() {
+    try {
+      AlertDialog.show({
+        message: "123"
+      })
+      this.userInfo = await getUserInfoApi()
+      AlertDialog.show({
+        message: JSON.stringify(this.userInfo)
+      })
+    } catch (e) {
+      console.log("error", e)
+    }
+  }
+
   build() {
     Column() {
       // 用户信息模块
@@ -129,79 +155,6 @@ struct My {
           leftText: "系统数据"
         })
       }
-
-      /*Column() {
-        // 车辆信息
-        Row() {
-          Text('车辆信息')
-            .fontSize(16)
-            .fontWeight(400)
-            .fontColor($r('app.color.text_primary'))
-
-          Image($r('app.media.ic_btn_more'))
-            .width(24)
-            .aspectRatio(1)
-        }
-        .width('100%')
-        .height(60)
-        .border({
-          width: {
-            bottom: 1
-          },
-          color: $r('app.color.background_page')
-        })
-        .justifyContent(FlexAlign.SpaceBetween)
-
-        // 任务数据
-        Row() {
-          Text('任务数据')
-            .fontSize(16)
-            .fontWeight(400)
-            .fontColor($r('app.color.text_primary'))
-
-          Image($r('app.media.ic_btn_more'))
-            .width(24)
-            .aspectRatio(1)
-        }
-        .width('100%')
-        .height(60)
-        .border({
-          width: {
-            bottom: 1
-          },
-          color: $r('app.color.background_page')
-        })
-        .justifyContent(FlexAlign.SpaceBetween)
-
-        // 系统设置
-        Row() {
-          Text('系统设置')
-            .fontSize(16)
-            .fontWeight(400)
-            .fontColor($r('app.color.text_primary'))
-
-          Image($r('app.media.ic_btn_more'))
-            .width(24)
-            .aspectRatio(1)
-        }
-        .width('100%')
-        .height(60)
-        .border({
-          width: {
-            bottom: 1
-          },
-          color: $r('app.color.background_page')
-        })
-        .justifyContent(FlexAlign.SpaceBetween)
-
-      }
-      .margin({ left: 16, right: 16 })
-      .backgroundColor($r('app.color.white'))
-      .borderRadius(8)
-      .padding({
-        left: 18,
-        right: 18
-      })*/
 
     }
     .height('100%')
