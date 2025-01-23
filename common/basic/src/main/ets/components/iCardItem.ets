@@ -3,11 +3,11 @@ export struct ICardItem {
   // 左侧文本属性
   leftText: string = ""
   // 是否展示右侧图标
-  showRightIcon?: boolean = true
+  showRightIcon: boolean = true
   // 右侧图标的图片资源
-  rightIcon?: ResourceStr = $r('app.media.ic_btn_more')
+  rightIcon: ResourceStr = $r('app.media.ic_btn_more')
   // 与父组件绑定的右侧文本属性
-  @Prop rightText?: string = ""
+  @Prop rightText: string = ""
   // 是否展示列表项底部的边框
   showBottomBorder: boolean = true
   // 右侧子组件的点击事件
