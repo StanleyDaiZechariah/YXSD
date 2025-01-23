@@ -1,4 +1,5 @@
-import { ICard, ICardItem, IConfirm, INavBar } from 'basic'
+import { ICard, ICardItem, IConfirm, INavBar, UserSettingClass } from 'basic'
+import { router } from '@kit.ArkUI'
 
 @Entry
 @Component
@@ -10,11 +11,38 @@ struct Setting {
   controller: CustomDialogController = new CustomDialogController({
     // 2.定义弹窗的内容
     builder: IConfirm({
-      message: '确定删除弹窗吗？'
+      message: '确定退出登录吗？',
+      buttonList: [
+        {
+          text: "取消",
+          fontColor: $r('app.color.text_primary'),
+          fontSize: 18
+        },
+        {
+          text: "确定",
+          fontColor: $r('app.color.primary'),
+          action: () => {
+            // 调用退出登录方法
+            this.logout()
+          }
+        }
+      ]
     }),
     // 取消默认弹窗样式
     customStyle: true
   })
+
+  // 退出登录的方法
+  logout() {
+    // 删除token
+    const setting = new UserSettingClass(getContext())
+    setting.deleteUserToken()
+
+    // 跳转到登录页
+    router.replaceUrl({
+      url: "pages/Login/Login"
+    })
+  }
 
   build() {
     Column() {

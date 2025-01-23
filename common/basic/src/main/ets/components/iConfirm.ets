@@ -8,7 +8,7 @@ export struct IConfirm {
   controller: CustomDialogController
   // 弹窗的文本
   message: string = '确定退出登陆吗？'
-  // 弹出框的按钮列表
+  // 弹出框的按钮列表的默认值
   buttonList: CustomDialogModel[] = [
     {
       text: "取消",
@@ -20,9 +20,6 @@ export struct IConfirm {
       text: "确定",
       fontColor: $r('app.color.primary'),
       action: () => {
-        AlertDialog.show({
-          message: "aaa"
-        })
       },
       fontSize: 18
     }
