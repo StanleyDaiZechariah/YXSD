@@ -1,6 +1,6 @@
 @Preview
 @Component
-struct ISkeleton {
+export struct ISkeleton {
   @State
   // 骨架屏是否显示左边的圆形
   showAvatar: boolean = true
@@ -9,7 +9,7 @@ struct ISkeleton {
   count: number = 4
   // 控制组件颜色的属性
   @State
-  currentColor: string = "#f60"
+  currentColor: string = "#f3f4f5"
   // 用于销毁定时器
   @State
   timer: number = -1
@@ -25,12 +25,12 @@ struct ISkeleton {
   // 实现闪屏效果的方法
   splashScreen() {
     setInterval(() => {
-      if (this.currentColor === "#f60") {
-        this.currentColor = "#ccc"
+      if (this.currentColor === "#f3f4f5") {
+        this.currentColor = "#f7f8f9"
       } else {
-        this.currentColor = "#f60"
+        this.currentColor = "#f3f4f5"
       }
-    }, 100)
+    }, 1000)
   }
 
   @Builder
@@ -91,5 +91,3 @@ struct ISkeleton {
     .backgroundColor($r('app.color.white'))
   }
 }
-
-export default ISkeleton

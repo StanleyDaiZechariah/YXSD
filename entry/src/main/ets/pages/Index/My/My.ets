@@ -3,6 +3,7 @@ import { ICardItem } from 'basic/src/main/ets/components/iCardItem'
 import { getUserInfoApi, getUserTaskInfoApi } from '../../../api'
 import { UserInfoModel, UserTaskInfoModel, UserTaskInfoParamsModel } from '../../../models'
 import { router } from '@kit.ArkUI'
+import { ISkeleton } from 'basic/src/main/ets/components/iSkeleton'
 
 @Entry
 @Component
@@ -27,6 +28,9 @@ struct My {
   // 初始化一个变量，用来保存请求到的任务数据
   @State
   userTaskInfo: UserTaskInfoModel = {} as UserTaskInfoModel
+  // 是否显示骨架屏
+  @State
+  loading: boolean = false
 
   // 页面第一次加载的时候，才会执行当前方法
   /*aboutToAppear(): void {
@@ -35,9 +39,11 @@ struct My {
   }*/
 
   // 只要切换到”我的“就更新任务数据和用户数据
-  initUserInfo() {
-    this.getUserInfo()
-    this.getUserTaskInfo()
+  async initUserInfo() {
+    this.loading = true
+    await this.getUserInfo()
+    await this.getUserTaskInfo()
+    this.loading = false
   }
 
   // 获取用户信息方法
@@ -70,142 +76,152 @@ struct My {
   }
 
   build() {
+
     Column() {
-      if (this.userInfo.name) {
-        // 用户信息模块
+      if (this.loading && !this.userInfo.name && !this.userTaskInfo.taskAmounts) {
+        ISkeleton()
+      } else {
         Column() {
-          // 汽车图标
-          Image(this.userInfo?.avatar)
-            .width(67)
-            .aspectRatio(1)
-            .borderRadius(34)
+          if (this.userInfo.name) {
+            // 用户信息模块
+            Column() {
+              // 汽车图标
+              Image(this.userInfo?.avatar)
+                .width(67)
+                .aspectRatio(1)
+                .borderRadius(34)
 
-          // 用户名
-          Text(this.userInfo?.name)
-            .fontSize(18)
-            .fontWeight(400)
-            .fontColor($r('app.color.white'))
-            .lineHeight(25)
-            .margin({
-              top: 9,
-              bottom: 9
+              // 用户名
+              Text(this.userInfo?.name)
+                .fontSize(18)
+                .fontWeight(400)
+                .fontColor($r('app.color.white'))
+                .lineHeight(25)
+                .margin({
+                  top: 9,
+                  bottom: 9
+                })
+
+              // 司机编号
+              Text(`司机编号：${this.userInfo?.number}`)
+                .fontSize(14)
+                .fontWeight(400)
+                .fontColor($r('app.color.white'))
+                .lineHeight(20)
+
+              // 手机号
+              Text(`手机号：${this.userInfo?.phone}`)
+                .fontSize(14)
+                .fontWeight(400)
+                .fontColor($r('app.color.white'))
+                .lineHeight(20)
+                .margin({ top: 10 })
+            }
+            .width('100%')
+            .height(292)
+            .backgroundImage($r('app.media.bg_page_my'))
+            .backgroundImageSize(ImageSize.Cover)
+            .justifyContent(FlexAlign.Center)
+            .alignItems(HorizontalAlign.Center)
+          }
+
+          // 本月任务
+          Column() {
+            Text("- 本月任务 -")
+              .fontSize(14)
+              .fontColor($r('app.color.text_secondary'))
+              .lineHeight(20)
+
+            Row() {
+              // 任务总量
+              Column() {
+                Text(this.userTaskInfo.taskAmounts?.toString() || '')
+                  .fontSize(18)
+                  .fontColor($r('app.color.text_primary'))
+                  .lineHeight(25)
+                  .margin({ bottom: 17 })
+
+                Text("任务总量")
+                  .fontSize(12)
+                  .fontColor($r('app.color.text_primary'))
+                  .lineHeight(17)
+              }
+
+              // 完成任务量
+              Column() {
+                Text(this.userTaskInfo.completedAmounts?.toString() || '')
+                  .fontSize(18)
+                  .fontColor($r('app.color.text_primary'))
+                  .lineHeight(25)
+                  .margin({ bottom: 17 })
+
+                Text("完成任务量")
+                  .fontSize(12)
+                  .fontColor($r('app.color.text_primary'))
+                  .lineHeight(17)
+              }
+
+              // 运输历程
+              Column() {
+                Text(this.userTaskInfo.transportMileage?.toString() || '')
+                  .fontSize(18)
+                  .fontColor($r('app.color.text_primary'))
+                  .lineHeight(25)
+                  .margin({ bottom: 17 })
+
+                Text("运输里程(km)")
+                  .fontSize(12)
+                  .fontColor($r('app.color.text_primary'))
+                  .lineHeight(17)
+              }
+            }
+            .width('100%')
+            .layoutWeight(1)
+            .justifyContent(FlexAlign.SpaceAround)
+          }
+          .height(134)
+          .borderRadius(8)
+          .margin({
+            left: 16,
+            right: 16,
+            top: -45,
+            bottom: 15
+          })
+          .padding({ top: 14, bottom: 14 })
+          .backgroundColor($r('app.color.white'))
+          .justifyContent(FlexAlign.SpaceBetween)
+
+
+          // 选项列表
+          ICard() {
+            // 尾随闭包的写法
+            ICardItem({
+              leftText: "车辆信息"
             })
 
-          // 司机编号
-          Text(`司机编号：${this.userInfo?.number}`)
-            .fontSize(14)
-            .fontWeight(400)
-            .fontColor($r('app.color.white'))
-            .lineHeight(20)
+            ICardItem({
+              leftText: "任务数据",
+            })
 
-          // 手机号
-          Text(`手机号：${this.userInfo?.phone}`)
-            .fontSize(14)
-            .fontWeight(400)
-            .fontColor($r('app.color.white'))
-            .lineHeight(20)
-            .margin({ top: 10 })
-        }
-        .width('100%')
-        .height(292)
-        .backgroundImage($r('app.media.bg_page_my'))
-        .backgroundImageSize(ImageSize.Cover)
-        .justifyContent(FlexAlign.Center)
-        .alignItems(HorizontalAlign.Center)
-      }
-
-      // 本月任务
-      Column() {
-        Text("- 本月任务 -")
-          .fontSize(14)
-          .fontColor($r('app.color.text_secondary'))
-          .lineHeight(20)
-
-        Row() {
-          // 任务总量
-          Column() {
-            Text(this.userTaskInfo.taskAmounts?.toString() || '')
-              .fontSize(18)
-              .fontColor($r('app.color.text_primary'))
-              .lineHeight(25)
-              .margin({ bottom: 17 })
-
-            Text("任务总量")
-              .fontSize(12)
-              .fontColor($r('app.color.text_primary'))
-              .lineHeight(17)
-          }
-
-          // 完成任务量
-          Column() {
-            Text(this.userTaskInfo.completedAmounts?.toString() || '')
-              .fontSize(18)
-              .fontColor($r('app.color.text_primary'))
-              .lineHeight(25)
-              .margin({ bottom: 17 })
-
-            Text("完成任务量")
-              .fontSize(12)
-              .fontColor($r('app.color.text_primary'))
-              .lineHeight(17)
-          }
-
-          // 运输历程
-          Column() {
-            Text(this.userTaskInfo.transportMileage?.toString() || '')
-              .fontSize(18)
-              .fontColor($r('app.color.text_primary'))
-              .lineHeight(25)
-              .margin({ bottom: 17 })
-
-            Text("运输里程(km)")
-              .fontSize(12)
-              .fontColor($r('app.color.text_primary'))
-              .lineHeight(17)
-          }
-        }
-        .width('100%')
-        .layoutWeight(1)
-        .justifyContent(FlexAlign.SpaceAround)
-      }
-      .height(134)
-      .borderRadius(8)
-      .margin({
-        left: 16,
-        right: 16,
-        top: -45,
-        bottom: 15
-      })
-      .padding({ top: 14, bottom: 14 })
-      .backgroundColor($r('app.color.white'))
-      .justifyContent(FlexAlign.SpaceBetween)
-
-
-      // 选项列表
-      ICard() {
-        // 尾随闭包的写法
-        ICardItem({
-          leftText: "车辆信息"
-        })
-
-        ICardItem({
-          leftText: "任务数据",
-        })
-
-        ICardItem({
-          leftText: "系统设置",
-          onRightClick: () => {
-            router.pushUrl({
-              url: "pages/Setting/Setting"
+            ICardItem({
+              leftText: "系统设置",
+              onRightClick: () => {
+                router.pushUrl({
+                  url: "pages/Setting/Setting"
+                })
+              }
             })
           }
-        })
-      }
 
+        }
+        .height('100%')
+        .width('100%')
+        .backgroundColor($r('app.color.background_page'))
+      }
     }
-    .height('100%')
     .width('100%')
-    .backgroundColor($r('app.color.background_page'))
+    .height('100%')
+
   }
 }
 
