@@ -3,7 +3,7 @@ import { ICardItem } from 'basic/src/main/ets/components/iCardItem'
 import { getUserInfoApi, getUserTaskInfoApi } from '../../../api'
 import { UserInfoModel, UserTaskInfoModel, UserTaskInfoParamsModel } from '../../../models'
 import { router } from '@kit.ArkUI'
-import { ISkeleton } from 'basic/src/main/ets/components/iSkeleton'
+import { My_Skeleton } from './Skeleton/My_Skeleton'
 
 @Entry
 @Component
@@ -79,7 +79,8 @@ struct My {
 
     Column() {
       if (this.loading && !this.userInfo.name && !this.userTaskInfo.taskAmounts) {
-        ISkeleton()
+        // ISkeleton() // 旧的骨架屏
+        My_Skeleton() // 定制化的骨架屏
       } else {
         Column() {
           if (this.userInfo.name) {
