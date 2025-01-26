@@ -25,6 +25,9 @@ export struct TaskList {
   // 初始化一个变量，保存数据是否全部请求到
   @State
   finished: boolean = false
+  // 创建一个变量保存下拉刷新的状态
+  @State
+  refresh: boolean = false
 
   // 请求数据的方法
   async onLoad() {
@@ -49,55 +52,76 @@ export struct TaskList {
     }
   }
 
-  build() {
-    List({ space: 10 }) {
-      ForEach(this.taskList, (item: TaskListItemDataModel) => {
-        ListItem() {
-          TaskItemCard({
-            taskItem: item
-          })
-        }
-      })
+  // list组件优化
+  @Builder
+  getBottom() {
+    Row() {
+      if (this.finished) {
+        Text('数据请求完毕！')
+          .fontSize(12)
+          .fontColor($r('app.color.text_secondary'))
+      } else {
+        LoadingProgress()
+          .width(20)
+          .aspectRatio(1)
+          .color($r('app.color.text_secondary'))
 
-      ListItem() {
-        Row() {
-          if (this.finished) {
-            Text('数据请求完毕！')
-              .fontSize(12)
-              .fontColor($r('app.color.text_secondary'))
-          } else {
-            LoadingProgress()
-              .width(20)
-              .aspectRatio(1)
-              .color($r('app.color.text_secondary'))
-
-            Text('数据加载中...')
-              .fontSize(12)
-              .fontColor($r('app.color.text_secondary'))
-          }
-        }
-        .width('100%')
-        .padding(10)
-        .justifyContent(FlexAlign.Center)
+        Text('数据加载中...')
+          .fontSize(12)
+          .fontColor($r('app.color.text_secondary'))
       }
     }
     .width('100%')
-    .height('100%')
     .padding(10)
-    .backgroundColor($r('app.color.background_page'))
-    .onReachEnd(() => {
-      // 当滚动条滚动到底部的时候触发该方法
-      // 但是如果我们一加载页面时就请求数据，会导致数据请求两次
-      // 于是干脆直接设置为滚动到底部触发
-      // 如果正在处于上拉加载中，则不在重新请求数据
-      if (this.loading) {
-        return
-      }
-      if (this.finished) {
-        return
-      }
-      this.onLoad()
+    .justifyContent(FlexAlign.Center)
+  }
 
-    })
+  // 自定义下拉刷新的文本
+  @Builder
+  getRefreshBuilder() {
+    Row() {
+      LoadingProgress()
+        .width(20)
+        .aspectRatio(1)
+        .color($r('app.color.primary'))
+
+      Text('刷新中')
+        .fontSize(14)
+        .fontColor($r('app.color.text_secondary'))
+    }
+    .width('100%')
+    .justifyContent(FlexAlign.Center)
+  }
+
+  build() {
+    Refresh({ refreshing: $$this.refresh, builder: this.getRefreshBuilder() }) {
+      List({ space: 10 }) {
+        ForEach(this.taskList, (item: TaskListItemDataModel) => {
+          ListItem() { // 任务信息
+            TaskItemCard({
+              taskItem: item
+            })
+          }
+        })
+        ListItem() { // 列表底部
+          this.getBottom()
+        }
+      }
+      .width('100%')
+      .height('100%')
+      .padding(10)
+      .backgroundColor($r('app.color.background_page'))
+      .onReachEnd(() => {
+        if (this.loading) {
+          return
+        }
+        if (this.finished) {
+          return
+        }
+        this.onLoad()
+
+      })
+    }
+
   }
 }
