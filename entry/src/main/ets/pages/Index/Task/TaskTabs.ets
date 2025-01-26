@@ -1,4 +1,5 @@
 import { TableClass } from 'basic'
+import { TaskList } from './TaskList'
 
 
 @Component
@@ -59,7 +60,13 @@ export struct TaskTabs {
         // 循环渲染导航栏数据
         ForEach(this.tabsData, (item: TableClass) => {
           TabContent() {
-            Text(item.name)
+            if (item.name === "waiting") {
+              TaskList()
+            } else if (item.name === "line") {
+
+            } else if (item.name === "finish") {
+
+            }
           }.tabBar(item.title)
         })
       }
