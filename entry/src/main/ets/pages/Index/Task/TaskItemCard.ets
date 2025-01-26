@@ -97,9 +97,6 @@ export struct TaskItemCard {
           .fontSize(14)
           .height(32)
           .enabled(this.taskItem.enablePickUp)
-          .onClick(() => {
-
-          })
       }
       .width('100%')
       .justifyContent(FlexAlign.SpaceBetween)
