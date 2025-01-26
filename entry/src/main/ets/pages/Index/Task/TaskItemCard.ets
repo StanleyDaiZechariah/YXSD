@@ -1,16 +1,21 @@
+import { TaskListItemDataModel } from '../../../models/task_page'
+
 @Component
 export struct TaskItemCard {
+  @Prop
+  taskItem: TaskListItemDataModel = {} as TaskListItemDataModel
+
   build() {
     Column() {
       // 任务编号
       Row() {
-        Text("任务编号：123123")
+        Text(`任务编号：${this.taskItem.transportTaskId}`)
           .fontSize(16)
           .fontWeight(500)
           .lineHeight(24)
           .fontColor($r('app.color.text_primary'))
 
-        Text("已延迟")
+        //Text("已延迟")
       }
       .width('100%')
       .justifyContent(FlexAlign.SpaceBetween)
@@ -26,7 +31,7 @@ export struct TaskItemCard {
           .backgroundColor($r('app.color.text_primary'))
           .borderRadius(11)
 
-        Text('我爱你你爱我')
+        Text(this.taskItem.startAddress)
           .fontSize(14)
           .fontColor($r('app.color.text_secondary'))
           .margin({
@@ -38,7 +43,7 @@ export struct TaskItemCard {
       .margin({
         top: 20
       })
-      .alignItems(VerticalAlign.Top)
+      .alignItems(VerticalAlign.Center)
 
       Row() {
         Text('终')
@@ -50,7 +55,7 @@ export struct TaskItemCard {
           .backgroundColor($r('app.color.primary'))
           .borderRadius(11)
 
-        Text('我爱果汁')
+        Text(this.taskItem.endAddress)
           .fontSize(14)
           .fontColor($r('app.color.text_secondary'))
           .margin({
@@ -79,7 +84,7 @@ export struct TaskItemCard {
             .fontSize(14)
             .fontColor($r('app.color.text_secondary'))
 
-          Text('2022.05.04 13:00')
+          Text(this.taskItem.planDepartureTime)
             .fontColor($r('app.color.text_primary'))
             .fontSize(14)
         }
