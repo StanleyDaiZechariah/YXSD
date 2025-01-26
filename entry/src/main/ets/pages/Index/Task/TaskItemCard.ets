@@ -2,6 +2,7 @@ import { TaskListItemDataModel } from '../../../models/task_page'
 
 @Component
 export struct TaskItemCard {
+  // 接收父类传来的用户数据
   @Prop
   taskItem: TaskListItemDataModel = {} as TaskListItemDataModel
 
@@ -91,10 +92,14 @@ export struct TaskItemCard {
         .alignItems(HorizontalAlign.Start)
 
         Button('提货', { type: ButtonType.Capsule })
-          .backgroundColor($r('app.color.primary'))
+          .backgroundColor(this.taskItem.enablePickUp ? $r('app.color.primary') : $r('app.color.primary_disabled'))
           .fontColor($r('app.color.white'))
           .fontSize(14)
           .height(32)
+          .enabled(this.taskItem.enablePickUp)
+          .onClick(() => {
+
+          })
       }
       .width('100%')
       .justifyContent(FlexAlign.SpaceBetween)

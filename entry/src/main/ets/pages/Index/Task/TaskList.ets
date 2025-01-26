@@ -1,5 +1,10 @@
 import { getTaskListApi } from '../../../api/task'
-import { TaskListDataModel, TaskListItemDataModel, TaskListParamsModel, TaskTypeEnum } from '../../../models/task_page'
+import {
+  TaskListDataModel,
+  TaskListItemDataModel,
+  TaskListParamsModel,
+  TaskTypeEnum
+} from '../../../models/task_page'
 import { TaskItemCard } from './TaskItemCard'
 
 @Component
