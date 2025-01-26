@@ -1,5 +1,6 @@
 import { getTaskListApi } from '../../../api/task'
 import { TaskListDataModel, TaskListItemDataModel, TaskListParamsModel, TaskTypeEnum } from '../../../models/task_page'
+import { TaskItemCard } from './TaskItemCard'
 
 @Component
 export struct TaskList {
@@ -31,7 +32,11 @@ export struct TaskList {
 
   build() {
     Column() {
-      Text("TaskList")
+      TaskItemCard()
     }
+    .width('100%')
+    .height('100%')
+    .padding(20)
+    .backgroundColor($r('app.color.background_page'))
   }
 }
