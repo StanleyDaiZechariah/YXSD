@@ -9,3 +9,5 @@ export * from "./iConfirm"
 export * from "./iSkeleton"
 
 export * from "./iSkeletonNew"
+
+export * from "./iList"
