@@ -35,7 +35,3 @@ export const getUserTaskInfoApi = (params: UserTaskInfoParamsModel): Promise<Use
 }
 
 
-/*
- * 退出登录接口
- *
- * */
