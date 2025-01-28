@@ -1,4 +1,4 @@
-import { BaseBuilderClass, INavBar, IToggleCard, RouterParamsModel } from 'basic'
+import { BaseBuilderClass, INavBar, IToggleCard, IUpLoad, RouterParamsModel } from 'basic'
 import { router } from '@kit.ArkUI'
 import { getTaskDetailInfoApi } from '../../api/task_detail'
 import { TaskDetailInfoModel } from '../../models/task_detail'
@@ -232,28 +232,9 @@ struct TaskDetail {
           }
 
           IToggleCard({ title: '提货信息', toggleCard: false }) {
-            Column() {
-              Text('请拍照上传回单凭证')
-                .fontSize(14)
-                .fontColor($r('app.color.text_secondary'))
-                .margin({
-                  top: 16,
-                  bottom: 16
-                })
+            IUpLoad({ title: '请拍照上传回单凭证' })
 
-              Row() {
-                Image($r('app.media.ic_add_img'))
-                  .width(30)
-                  .aspectRatio(1)
-              }
-              .width(95)
-              .height(95)
-              .backgroundColor("#f2f2f2")
-              .justifyContent(FlexAlign.Center)
-
-            }
-            .width('100%')
-            .alignItems(HorizontalAlign.Start)
+            IUpLoad({ title: '请拍照上传货品照片' })
           }
         }
         .padding({
