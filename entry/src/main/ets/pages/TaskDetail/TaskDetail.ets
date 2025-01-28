@@ -232,13 +232,33 @@ struct TaskDetail {
           }
 
           IToggleCard({ title: '提货信息', toggleCard: false }) {
+            Column() {
+              Text('请拍照上传回单凭证')
+                .fontSize(14)
+                .fontColor($r('app.color.text_secondary'))
+                .margin({
+                  top: 16,
+                  bottom: 16
+                })
 
+              Row() {
+                Image($r('app.media.ic_add_img'))
+                  .width(30)
+                  .aspectRatio(1)
+              }
+              .width(95)
+              .height(95)
+              .backgroundColor("#f2f2f2")
+              .justifyContent(FlexAlign.Center)
+
+            }
+            .width('100%')
+            .alignItems(HorizontalAlign.Start)
           }
         }
         .padding({
           bottom: 40
         })
-        .height('100%')
       }
       .height('100%')
       .backgroundColor($r('app.color.background_page'))
