@@ -11,3 +11,5 @@ export * from "./iSkeleton"
 export * from "./iSkeletonNew"
 
 export * from "./iList"
+
+export * from "./iToggleCard"
