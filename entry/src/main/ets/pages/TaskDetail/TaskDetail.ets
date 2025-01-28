@@ -206,6 +206,35 @@ struct TaskDetail {
     })
   }
 
+  // 底部按钮组件
+  @Builder
+  getBottomBtn() {
+    Row() {
+      Button('延迟收货', { type: ButtonType.Capsule })
+        .width(125)
+        .height(50)
+        .fontSize(16)
+        .fontColor($r('app.color.text_primary'))
+        .backgroundColor($r('app.color.btn_gray'))
+
+      Button('提货')
+        .layoutWeight(1)
+        .height(50)
+        .fontSize(16)
+        .fontColor($r('app.color.white'))
+        .backgroundColor($r('app.color.primary_disabled'))
+        .margin({ left: 13 })
+    }
+    .width('100%')
+    .height(70)
+    .padding({
+      left: 15,
+      right: 15
+    })
+    .backgroundColor($r('app.color.white'))
+    .justifyContent(FlexAlign.SpaceAround)
+  }
+
   build() {
     Column() {
       INavBar({
@@ -238,11 +267,13 @@ struct TaskDetail {
           }
         }
         .padding({
-          bottom: 40
+          bottom: 20
         })
       }
-      .height('100%')
+      .layoutWeight(1)
       .backgroundColor($r('app.color.background_page'))
+
+      this.getBottomBtn()
 
     }
     .height('100%')
