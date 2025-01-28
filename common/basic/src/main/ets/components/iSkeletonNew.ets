@@ -6,7 +6,8 @@ export struct ISkeletonNew {
   // 是否为圆形
   circle: boolean = false
   // 组件的背景颜色
-  bgColor: string = "#f3f4f5"
+  @Prop
+  bgColor: string = "#fff"
   // 设置组建的圆角
   bdRadius: number | string | BorderRadiuses = ""
   // 用于销毁定时器
@@ -24,12 +25,12 @@ export struct ISkeletonNew {
   // 实现闪屏效果的方法
   splashScreen() {
     setInterval(() => {
-      if (this.bgColor === "#f3f4f5") {
-        this.bgColor = "#f7f8f9"
+      if (this.bgColor === "#fff") {
+        this.bgColor = "#eee"
       } else {
-        this.bgColor = "#f3f4f5"
+        this.bgColor = "#fff"
       }
-    }, 1000)
+    }, 300)
   }
 
   build() {

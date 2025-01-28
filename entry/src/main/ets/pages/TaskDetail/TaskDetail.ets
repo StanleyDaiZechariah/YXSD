@@ -2,6 +2,7 @@ import { BaseBuilderClass, INavBar, IToggleCard, IUpLoad, RouterParamsModel } fr
 import { router } from '@kit.ArkUI'
 import { getTaskDetailInfoApi } from '../../api/task_detail'
 import { TaskDetailInfoModel } from '../../models/task_detail'
+import { TaskDetail_Skeleton } from './Skeleton/TaskDetail_Skeleton'
 
 @Extend(Text)
 function baseTextIconStyle() {
@@ -29,6 +30,8 @@ struct TaskDetail {
   params: RouterParamsModel = {} as RouterParamsModel
   @State
   taskDetailInfo: TaskDetailInfoModel = {} as TaskDetailInfoModel
+  @State
+  skeletonStatus: boolean = false
 
   aboutToAppear(): void {
     this.getParamsData()
@@ -43,7 +46,9 @@ struct TaskDetail {
   //获取任务详情的数据
   async getTaskDetailInfo(): Promise<void> {
     try {
+      this.skeletonStatus = true
       this.taskDetailInfo = await getTaskDetailInfoApi(this.params.id)
+      this.skeletonStatus = false
     } catch (e) {
       console.log('error', e)
     }
@@ -236,48 +241,52 @@ struct TaskDetail {
   }
 
   build() {
-    Column() {
-      INavBar({
-        title: '任务详情',
-        rightText: '取消任务'
-      })
-
-      Scroll() {
-        Column() {
-          IToggleCard({ title: '基本信息' }) {
-            this.getBaseContent()
-          }
-
-          IToggleCard({ title: '车辆司机信息', toggleCard: false }) {
-            this.getDriverContent()
-          }
-
-          IToggleCard({ title: '运输路线', toggleCard: false }) {
-            this.getTransLineContent()
-          }
-
-          IToggleCard({ title: '物品信息', toggleCard: false }) {
-            // 后端暂时没有数据
-          }
-
-          IToggleCard({ title: '提货信息', toggleCard: false }) {
-            IUpLoad({ title: '请拍照上传回单凭证' })
-
-            IUpLoad({ title: '请拍照上传货品照片' })
-          }
-        }
-        .padding({
-          bottom: 20
+    if (this.skeletonStatus) {
+      TaskDetail_Skeleton()
+    } else {
+      Column() {
+        INavBar({
+          title: '任务详情',
+          rightText: '取消任务'
         })
+
+        Scroll() {
+          Column() {
+            IToggleCard({ title: '基本信息' }) {
+              this.getBaseContent()
+            }
+
+            IToggleCard({ title: '车辆司机信息', toggleCard: false }) {
+              this.getDriverContent()
+            }
+
+            IToggleCard({ title: '运输路线', toggleCard: false }) {
+              this.getTransLineContent()
+            }
+
+            IToggleCard({ title: '物品信息', toggleCard: false }) {
+              // 后端暂时没有数据
+            }
+
+            IToggleCard({ title: '提货信息', toggleCard: false }) {
+              IUpLoad({ title: '请拍照上传回单凭证' })
+
+              IUpLoad({ title: '请拍照上传货品照片' })
+            }
+          }
+          .padding({
+            bottom: 20
+          })
+        }
+        .layoutWeight(1)
+        .backgroundColor($r('app.color.background_page'))
+
+        this.getBottomBtn()
       }
-      .layoutWeight(1)
+      .height('100%')
+      .width('100%')
       .backgroundColor($r('app.color.background_page'))
-
-      this.getBottomBtn()
-
     }
-    .height('100%')
-    .width('100%')
-    .backgroundColor($r('app.color.background_page'))
+
   }
 }
