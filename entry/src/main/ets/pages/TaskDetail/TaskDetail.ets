@@ -88,7 +88,7 @@ struct TaskDetail {
           .baseTextIconStyle()
           .backgroundColor($r('app.color.text_primary'))
 
-        Text('北京市昌平区回龙观街道西三旗桥东金燕龙写字楼8877号')
+        Text(this.taskDetailInfo.startAddress)
           .baseTextStyle()
       }
       .margin({ top: 18 })
@@ -98,13 +98,14 @@ struct TaskDetail {
           .baseTextIconStyle()
           .backgroundColor($r('app.color.primary'))
 
-        Text('河南省郑州市路北区北青路99号')
+        Text(this.taskDetailInfo.endAddress)
           .baseTextStyle()
       }
       .margin({ top: 8 })
     }
     .alignItems(HorizontalAlign.Start)
-    .margin({ right: 20 })
+    .width('100%')
+    .margin({ left: 20, right: 20 })
 
     Divider()
       .width('100%')
@@ -117,28 +118,28 @@ struct TaskDetail {
 
     this.getBaseContentItem({
       title: '任务编号',
-      value: '1557211886558850'
+      value: this.taskDetailInfo.transportTaskId
     })
 
     this.getBaseContentItem({
       title: '联系人',
-      value: '张三'
+      value: this.taskDetailInfo.startHandoverName
     })
 
     this.getBaseContentItem({
       title: '联系电话',
-      value: '13512345678',
+      value: this.taskDetailInfo.startHandoverPhone,
       icon: $r('app.media.ic_phone')
     })
 
     this.getBaseContentItem({
       title: '提货时间',
-      value: '2022.05.04 13:00'
+      value: this.taskDetailInfo.planDepartureTime
     })
 
     this.getBaseContentItem({
       title: '预计送达时间',
-      value: '2022.05.04 10:00'
+      value: this.taskDetailInfo.planArrivalTime
     })
   }
 
@@ -148,12 +149,12 @@ struct TaskDetail {
     Column() {
       this.getBaseContentItem({
         title: '车牌号',
-        value: '京A123456'
+        value: this.taskDetailInfo.licensePlate
       })
 
       this.getBaseContentItem({
         title: '司机姓名',
-        value: '张三'
+        value: this.taskDetailInfo.driverName
       })
     }
   }
@@ -163,13 +164,13 @@ struct TaskDetail {
   getTransLineContent() {
     Row() {
       Column() {
-        Text('北京市')
+        Text(this.taskDetailInfo.startProvince)
           .fontSize(16)
           .lineHeight(22)
           .fontColor($r('app.color.text_primary'))
           .fontWeight(600)
 
-        Text('北京市')
+        Text(this.taskDetailInfo.startCity)
           .fontSize(14)
           .lineHeight(22)
           .fontColor($r('app.color.text_secondary'))
@@ -181,13 +182,13 @@ struct TaskDetail {
         .height(16)
 
       Column() {
-        Text('河南省')
+        Text(this.taskDetailInfo.endProvince)
           .fontSize(16)
           .lineHeight(22)
           .fontColor($r('app.color.text_primary'))
           .fontWeight(600)
 
-        Text('郑州市')
+        Text(this.taskDetailInfo.endCity)
           .fontSize(14)
           .lineHeight(22)
           .fontColor($r('app.color.text_secondary'))
@@ -227,7 +228,7 @@ struct TaskDetail {
           }
 
           IToggleCard({ title: '物品信息', toggleCard: false }) {
-
+            // 后端暂时没有数据
           }
 
           IToggleCard({ title: '提货信息', toggleCard: false }) {
