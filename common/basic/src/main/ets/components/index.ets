@@ -15,3 +15,5 @@ export * from "./iList"
 export * from "./iToggleCard"
 
 export * from "./iUpLoad"
+
+export * from "./iPreview"
