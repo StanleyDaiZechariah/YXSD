@@ -142,6 +142,69 @@ struct TaskDetail {
     })
   }
 
+  // 车辆司机信息
+  @Builder
+  getDriverContent() {
+    Column() {
+      this.getBaseContentItem({
+        title: '车牌号',
+        value: '京A123456'
+      })
+
+      this.getBaseContentItem({
+        title: '司机姓名',
+        value: '张三'
+      })
+    }
+  }
+
+  // 运输路线
+  @Builder
+  getTransLineContent() {
+    Row() {
+      Column() {
+        Text('北京市')
+          .fontSize(16)
+          .lineHeight(22)
+          .fontColor($r('app.color.text_primary'))
+          .fontWeight(600)
+
+        Text('北京市')
+          .fontSize(14)
+          .lineHeight(22)
+          .fontColor($r('app.color.text_secondary'))
+      }
+      .width(50)
+
+      Image($r('app.media.ic_right_arrow'))
+        .width(36)
+        .height(16)
+
+      Column() {
+        Text('河南省')
+          .fontSize(16)
+          .lineHeight(22)
+          .fontColor($r('app.color.text_primary'))
+          .fontWeight(600)
+
+        Text('郑州市')
+          .fontSize(14)
+          .lineHeight(22)
+          .fontColor($r('app.color.text_secondary'))
+      }
+      .width(50)
+    }
+    .width('100%')
+    .justifyContent(FlexAlign.SpaceBetween)
+    .padding({
+      left: 60,
+      right: 60
+    })
+    .margin({
+      top: 20
+    })
+  }
+
   build() {
     Column() {
       INavBar({
@@ -156,11 +219,11 @@ struct TaskDetail {
           }
 
           IToggleCard({ title: '车辆司机信息', toggleCard: false }) {
-
+            this.getDriverContent()
           }
 
           IToggleCard({ title: '运输路线', toggleCard: false }) {
-
+            this.getTransLineContent()
           }
 
           IToggleCard({ title: '物品信息', toggleCard: false }) {

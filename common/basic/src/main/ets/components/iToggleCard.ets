@@ -20,7 +20,7 @@ export struct IToggleCard {
           .width(24)
           .aspectRatio(1)
           .onClick(() => {
-            animateTo({ duration: 300 }, () => {
+            animateTo({ duration: 250 }, () => {
               this.toggleCard = !this.toggleCard
             })
           })
