@@ -1,12 +1,12 @@
 @Entry
 @Component
-struct Index {
-  @State message: string = 'Hello World';
+struct Message {
+  @State message: string = 'Message';
 
   build() {
     RelativeContainer() {
       Text(this.message)
-        .id('HelloWorld')
+        .id('MessageHelloWorld')
         .fontSize(50)
         .fontWeight(FontWeight.Bold)
         .alignRules({
@@ -18,3 +18,5 @@ struct Index {
     .width('100%')
   }
 }
+
+export default Message
